@@ -1,0 +1,17 @@
+{
+	"appName": "Notification API",
+	"host":"api.notification.com",
+	"port": 3000,
+	"debug": {
+		"request": [
+			"error",
+			"info"
+		],
+		"log": [
+			"info",
+			"error",
+			"warning"
+		]
+	},
+	"mongo": "mongodb://localhost:27017/swvl"
+}
