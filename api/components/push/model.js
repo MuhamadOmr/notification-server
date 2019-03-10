@@ -15,6 +15,7 @@ const schema = mongoose.Schema(
     sendDate: Date,
     status: String,
     sentCount: Number,
+    filterCondition: Object,
   },
   {
     collection: 'push',

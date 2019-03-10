@@ -1,5 +1,5 @@
 /**
- * Project: pushbots-api-v3
+ * Project: notifiction-api
  */
 exports.plugin = {
   async register(server) {

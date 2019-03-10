@@ -23,9 +23,10 @@ Handlers.get = async (req, res) => {
     _id: req.params.id,
   }).exec();
 
-  if (!pushNotification) Boom.unauthorized('push notification not found!');
+  if (!pushNotification)
+    return Boom.unauthorized('push notification not found!');
 
-  return device;
+  return pushNotification;
 };
 
 module.exports = {
@@ -35,7 +36,7 @@ module.exports = {
   get: {
     tags: ['api', 'push', 'notification'],
     validate: {
-      params: validators.pushGet,
+      params: validators.pushNotificationGet,
       failAction: async (request, h, err) => {
         if (process.env.NODE_ENV === 'production') {
           console.error('ValidationError:', err.message);
@@ -55,17 +56,18 @@ module.exports = {
           },
           '200': {
             description: 'success',
+            schema: validators.pushNotificationGetResponse,
           },
         },
         consumes: ['application/json'],
         produces: ['application/json'],
         validate: {
-          params: validators.pushGet,
+          params: validators.pushNotificationGet,
         },
         payloadType: 'json',
       },
     },
-    description: 'get notification endpoint',
+    description: 'get push notification endpoint',
     handler: Handlers.get,
   },
 };
