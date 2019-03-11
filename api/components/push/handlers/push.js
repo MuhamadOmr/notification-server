@@ -13,7 +13,12 @@ const Handlers = {};
 // Lib contains our business specific logic
 const Lib = {};
 
-Lib.createJobs = pushNotification => {
+/**
+ * create jobs in a message queue with language and delayed time
+ *
+ * @param {Object} pushNotification
+ */
+Lib.createNotificationJobs = pushNotification => {
   for (const messageObj of pushNotification.messages) {
     jobsMS.add(
       {
@@ -32,10 +37,16 @@ Lib.createJobs = pushNotification => {
   }
 };
 
+/**
+ * create a push notification
+ *
+ * @param {Object} pushNotification
+ * @returns {Promise} resolve to Push notification object created | rejects with a mongo creation error
+ */
 Lib.createPushNotification = async pushNotification => {
   const push = new Push({ ...pushNotification, status: 'inproccess' });
   await push.save();
-  return push;
+  return Promise.resolve(push);
 };
 
 /**
@@ -52,7 +63,7 @@ Handlers.push = async (req, res) => {
     },
   );
 
-  const jobs = Lib.createJobs(pushNotification);
+  const jobs = Lib.createNotificationJobs(pushNotification);
 
   return pushNotification;
 };
