@@ -15,7 +15,7 @@ const swaggerOptions = {
     {
       name: 'push',
       description:
-        'Endpoints related to sending different types of push notifications.',
+        'Endpoints related to sending different types of notifications.',
     },
   ],
   info: {
