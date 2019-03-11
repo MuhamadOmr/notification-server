@@ -10,23 +10,12 @@ const messageSchema = mongoose.Schema({
 
 const schema = mongoose.Schema(
   {
-    messages: [messageSchema],
+    message: String,
     // Sending Dates
-    sendDate: {
-      type: Date,
-      default: Date.now(),
-    },
-    //['inproccess', 'sent', 'failed']
-    status: {
-      type: String,
-      default: 'inproccess',
-    },
-    //['normal', 'personalized']
+    sendDate: Date,
+    status: String,
     type: String,
-    sentCount: {
-      type: Number,
-      default: 0,
-    },
+    sentCount: Number,
     filterCondition: Object,
   },
   {

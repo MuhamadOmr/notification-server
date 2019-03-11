@@ -57,10 +57,10 @@ module.exports.postPushNotification = Joi.object().keys({
     registeredgt: Joi.date()
       .iso()
       .label('Registered date greater than'),
-    lastRidegt: Joi.date()
+    lastRideDategt: Joi.date()
       .iso()
       .label('last ride date greater than'),
-    lastRidelt: Joi.date()
+    lastRideDatelt: Joi.date()
       .iso()
       .label('last ride date less than'),
     numberOfRidesgt: Joi.number().label('number of rides greater than'),
@@ -94,7 +94,7 @@ module.exports.postPushNotification = Joi.object().keys({
 
 let postPushNotificationRes = Joi.object()
   .keys({
-    status: Joi.number().required(),
+    statusCode: Joi.number().required(),
     message: Joi.string(),
   })
   .unknown();

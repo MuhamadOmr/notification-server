@@ -5,12 +5,38 @@ const mongoose = require('mongoose');
 const Push = mongoose.model('push');
 const Boom = require('boom');
 const validators = require('../validator');
+const jobsMS = require('../helpers/jobsMessageQueue');
 
 // handlers are exported back for use in hapi routes
 const Handlers = {};
 
 // Lib contains our business specific logic
 const Lib = {};
+
+Lib.createJobs = pushNotification => {
+  for (const messageObj of pushNotification.messages) {
+    jobsMS.add(
+      {
+        message: messageObj.body,
+        pushNotificationId: pushNotification._id,
+        condition: {
+          ...pushNotification.filterCondition,
+          lang: messageObj.language,
+        },
+        type: pushNotification.type,
+      },
+      {
+        delay: pushNotification.sendDate.getMilliseconds(),
+      },
+    );
+  }
+};
+
+Lib.createPushNotification = async pushNotification => {
+  const push = new Push({ ...pushNotification, status: 'inproccess' });
+  await push.save();
+  return push;
+};
 
 /**
  * make a push notification Handler
@@ -20,10 +46,13 @@ const Lib = {};
  */
 Handlers.push = async (req, res) => {
   const sentPN = req.payload;
-  const pushNotification = await Push.create(sentPN);
+  const pushNotification = await Lib.createPushNotification(sentPN).catch(
+    () => {
+      throw Boom.badRequest('push notification failed to create!');
+    },
+  );
 
-  if (!pushNotification)
-    return Boom.unauthorized('push notification not found!');
+  const jobs = Lib.createJobs(pushNotification);
 
   return pushNotification;
 };
@@ -61,7 +90,7 @@ module.exports = {
         consumes: ['application/json'],
         produces: ['application/json'],
         validate: {
-          payload: validators.pushNotificationGet,
+          payload: validators.postPushNotification,
         },
         payloadType: 'json',
       },
