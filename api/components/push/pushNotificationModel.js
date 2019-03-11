@@ -10,15 +10,17 @@ const messageSchema = mongoose.Schema({
 
 const schema = mongoose.Schema(
   {
-    message: [messageSchema],
-    // Sending Date
+    messages: [messageSchema],
+    // Sending Dates
     sendDate: Date,
     status: String,
+    type: String,
     sentCount: Number,
     filterCondition: Object,
   },
   {
     collection: 'push',
+    timestamps: true,
   },
 );
 

@@ -4,7 +4,7 @@
 
 const Mongoose = require('mongoose');
 const Glob = require('glob');
-require('../components/push/model');
+require('../components/push/pushNotificationModel');
 Mongoose.Promise = require('bluebird');
 
 exports.plugin = {
