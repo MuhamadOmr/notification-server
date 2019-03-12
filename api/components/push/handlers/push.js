@@ -18,7 +18,7 @@ const Lib = {};
  *
  * @param {Object} pushNotification
  */
-Lib.createNotificationJobs = pushNotification => {
+Lib.createNotificationJobs = (jobsMS, pushNotification) => {
   for (const messageObj of pushNotification.messages) {
     jobsMS.add(
       {
@@ -35,6 +35,7 @@ Lib.createNotificationJobs = pushNotification => {
       },
     );
   }
+  return true;
 };
 
 /**
@@ -63,9 +64,9 @@ Handlers.push = async (req, res) => {
     },
   );
 
-  const jobs = Lib.createNotificationJobs(pushNotification);
+  const jobs = Lib.createNotificationJobs(jobsMS, pushNotification);
 
-  return pushNotification;
+  return res.response({ pushNotification }).code(201);
 };
 
 module.exports = {

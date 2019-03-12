@@ -5,7 +5,7 @@
   "main": "server.js",
   "scripts": {
     "dev": "nodemon server.js",
-    "test": "cross-env NODE_ENV=test node node_modules/lab/bin/lab -v -C",
+    "test": "cross-env NODE_ENV=test node node_modules/lab/bin/lab -v -C -I __core-js_shared__,core",
     "test-cov-html": "lab -r html -o coverage.html",
     "lint": "eslint {app,lib,config}/**/*.js server.js",
     "lint:fix": "eslint --fix {app,lib,config}/**/*.js server.js",
@@ -64,7 +64,7 @@
     "eslint-config-prettier": "^3.3.0",
     "eslint-plugin-hapi": "^4.1.0",
     "husky": "^0.14.3",
-    "lab": "^16.1.0",
+    "lab": "^18.0.2",
     "lint-staged": "^7.2.2",
     "nodemon": "^1.18.10",
     "prettier": "^1.15.3"
