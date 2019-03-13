@@ -1,3 +1,4 @@
 {
-	"mongo": "mongodb://localhost:27017/swvltesting"
+	"mongo": "mongodb://localhost:27017/swvltesting",
+	"redis": "redis://127.0.0.1:6379"
 }

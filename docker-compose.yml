@@ -1,0 +1,26 @@
+version: "3"
+services:
+    redis:
+        image: redis
+        container_name: redis
+        expose:
+            - 6379
+    mongo:
+        image: mongo:4.0.5
+        command: mongod --port 27017
+        restart: always
+        expose:
+            - 27017
+        volumes:
+            - mongo-data:/data/db
+    api:
+        build:
+            context: ./api
+            dockerfile: Dockerfile
+        ports:
+            - "3000:3000"
+        depends_on:
+            - "mongo"
+        command: sh -c './wait-for mongo:27017 && npm run compose'
+volumes:
+    mongo-data:

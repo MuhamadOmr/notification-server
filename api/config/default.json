@@ -13,5 +13,6 @@
 			"warning"
 		]
 	},
-	"mongo": "mongodb://localhost:27017/swvl"
+	"mongo": "mongodb://localhost:27017/swvl",
+	"redis": "redis://127.0.0.1:6379"
 }

@@ -1,0 +1,4 @@
+{
+  "mongo": "mongodb://mongo:27017/swvl",
+  "redis": "redis://redis:6379" 
+}

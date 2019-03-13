@@ -5,6 +5,7 @@
   "main": "server.js",
   "scripts": {
     "dev": "nodemon server.js",
+    "compose": "cross-env NODE_ENV=compose node server.js",
     "test": "cross-env NODE_ENV=test node node_modules/lab/bin/lab -v -C -I __core-js_shared__,core",
     "test-cov-html": "lab -r html -o coverage.html",
     "lint": "eslint {app,lib,config}/**/*.js server.js",
