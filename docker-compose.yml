@@ -5,14 +5,19 @@ services:
         container_name: redis
         expose:
             - 6379
-    mongo:
+    mongodb:
         image: mongo:4.0.5
+        # start a mongodb server and dropping the customers collection because it gets seeded everytime we compose up
         command: mongod --port 27017
         restart: always
         expose:
             - 27017
         volumes:
             - mongo-data:/data/db
+    mongo-seed:
+        build:
+            context: ./mongo-seed
+            dockerfile: Dockerfile
     api:
         build:
             context: ./api
@@ -20,7 +25,7 @@ services:
         ports:
             - "3000:3000"
         depends_on:
-            - "mongo"
-        command: sh -c './wait-for mongo:27017 && npm run compose'
+            - "mongodb"
+        command: sh -c './wait-for mongodb:27017 && npm run compose'
 volumes:
     mongo-data:
