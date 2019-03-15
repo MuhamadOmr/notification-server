@@ -1,24 +1,23 @@
-// const { FCMSender } = require('../helpers/PushNotificationSender');
 const DevicesSenderQueue = require('../devicesMessageQ/devicesSenderQueue');
 const { chunkifyDevicesForSender } = require('../helpers/DevicesChunker');
-
+const { getListOfdevicesTokens } = require('../helpers/CustomersRepo');
 
 /**
- * group push notification process on each job in the queue coming from api
+ * group push notification process each job in the queue coming from api
  *
- * main purpose is make job queues for each sending request to handle 1k device at most
+ * chunking the huge list of devices into 1k device per request
  *
  * @param {Object} job - group push notification job
  * @returns {Promise}
  */
-const groupPushProcessor = job => {
-  const notificationDevices = [];
-  const devicesChunks = chunkifyDevicesForSender(notificationDevices);
+const groupPushProcessor = async job => {
+  const devicesTokensArray = getListOfdevicesTokens(job.condition);
+  const devicesChunks = chunkifyDevicesForSender(devicesTokensArray);
 
   devicesChunks.forEach(devicesList => {
     DevicesSenderQueue.add({
-      devices: devicesList,
-      message: job.message,
+      devicesList,
+      message: job.data.message,
     });
   });
 

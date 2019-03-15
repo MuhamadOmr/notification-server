@@ -1,5 +1,6 @@
 require('dotenv').config();
 require('./src/lib/mongoose');
+require('./src/models/customer');
 require('./src/pushJobsQueue/groupPushQueue');
 
 // const { chunkifyGroupNotification } = require('./helpers/DevicesChunker');

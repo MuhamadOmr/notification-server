@@ -1,6 +1,11 @@
 const Queue = require('bull');
 const path = require('path');
 
+// this listen to the queue sent by the api 
+
+// processor is chunking a huge list of devices into 1k device per FCM Request
+// it chunks are sent into a devicesSenderMessageQ 
+
 const GroupPushQueue = new Queue(
   'group push notification message queue',
   process.env.REDIS_URL,

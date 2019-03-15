@@ -2,8 +2,6 @@ const mongoose = require('mongoose');
 
 // export this function and imported by server.js
 module.exports = (() => {
-  mongoose.connect(process.env.MONGODB_URL);
-
   mongoose.connection.on('connected', () => {
     console.log('Mongoose default connection is open to ');
   });
@@ -23,4 +21,6 @@ module.exports = (() => {
       );
     });
   });
+
+  mongoose.connect(process.env.MONGODB_URL);
 })();
