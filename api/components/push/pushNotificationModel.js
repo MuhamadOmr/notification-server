@@ -21,7 +21,7 @@ const schema = mongoose.Schema(
       type: String,
       default: 'inproccess',
     },
-    // ['normal', 'personalized']
+    // ['group', 'personalized']
     type: String,
     sentCount: {
       type: Number,
