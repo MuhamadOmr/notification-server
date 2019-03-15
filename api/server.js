@@ -1,14 +1,12 @@
-'use strict';
-
 /**
  * * Project: notification-api
  */
 const Glue = require('glue');
 const Forwarded = require('forwarded');
 const path = require('path');
+const serverConfig = require('./config/manifest');
 
 exports.deployment = async start => {
-  const serverConfig = require('./config/manifest');
   const options = {
     ...serverConfig.options,
     relativeTo: path.resolve(__dirname),
@@ -21,7 +19,7 @@ exports.deployment = async start => {
   server.ext({
     type: 'onRequest',
     method: (request, h) => {
-      let remoteAddress = Forwarded(request.raw.req)
+      const remoteAddress = Forwarded(request.raw.req)
         .pop()
         .trim();
       if (remoteAddress) {

@@ -7,7 +7,7 @@ Joi.objectId = require('joi-objectid')(Joi);
 const PUSH_NOTIFICATION_STATUSES = ['inproccess', 'sent', 'failed'];
 const PUSH_NOTIFICATION_TYPES = ['normal', 'personalized'];
 
-let notification_message = Joi.object().keys({
+const notificationMessage = Joi.object().keys({
   language: Joi.string().required(),
   body: Joi.string().required(),
 });
@@ -24,7 +24,7 @@ module.exports.pushNotificationGetResponse = Joi.object().keys({
     .min(1)
     .single()
     .required()
-    .items(notification_message)
+    .items(notificationMessage)
     .label('Localized Notification message')
     .description('push notification message'),
   sendDate: Joi.string().required(),
@@ -42,7 +42,7 @@ module.exports.postPushNotification = Joi.object().keys({
     .min(1)
     .single()
     .required()
-    .items(notification_message)
+    .items(notificationMessage)
     .label('Localized Notification message')
     .description('push notification message'),
   sendDate: Joi.date()
@@ -91,10 +91,3 @@ module.exports.postPushNotification = Joi.object().keys({
       .label('Tags'),
   }),
 });
-
-let postPushNotificationRes = Joi.object()
-  .keys({
-    statusCode: Joi.number().required(),
-    message: Joi.string(),
-  })
-  .unknown();

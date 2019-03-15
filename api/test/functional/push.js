@@ -1,14 +1,12 @@
-'use strict';
-
 // requires for testing
 const Code = require('code');
-const expect = Code.expect;
 const Lab = require('lab');
-const { before, describe, it, after } = (exports.lab = Lab.script());
 const mongoose = require('mongoose');
 const JobsQueue = require('../../components/push/helpers/jobsMessageQueue');
-
 const Server = require('../../server');
+
+const { expect } = Code;
+const { before, describe, it, after } = (exports.lab = Lab.script());
 
 // require hapi server
 
@@ -21,7 +19,7 @@ async function setup() {
 
 describe('test pushing notifications ', async () => {
   before(async () => {
-    //Remove and recreate sample application on every run
+    // Remove and recreate sample application on every run
     await Server.deployment();
 
     return setup();
@@ -90,9 +88,12 @@ describe('test pushing notifications ', async () => {
       const jobsCount = await JobsQueue.count();
 
       expect(response.statusCode).to.equal(ctx.expected.statusCode);
-      ctx.expected.queueCount &&
-        typeof ctx.expected.queueCount == 'number' &&
+      if (
+        ctx.expected.queueCount &&
+        typeof ctx.expected.queueCount === 'number'
+      ) {
         expect(jobsCount).to.equal(ctx.expected.queueCount);
+      }
     });
   });
 

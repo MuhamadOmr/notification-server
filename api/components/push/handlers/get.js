@@ -2,9 +2,10 @@
  * Project: notification-api
  */
 const mongoose = require('mongoose');
-const Push = mongoose.model('push');
 const Boom = require('boom');
 const validators = require('../validator');
+
+const Push = mongoose.model('push');
 
 // handlers are exported back for use in hapi routes
 const Handlers = {};
@@ -16,9 +17,9 @@ const Lib = {};
  * get push notification Handler
  *
  * @param {objec} req
- * @param {object} res
+ *
  */
-Handlers.get = async (req, res) => {
+Handlers.get = async req => {
   const pushNotification = await Push.findOne({
     _id: req.params.id,
   }).exec();
@@ -42,7 +43,7 @@ module.exports = {
           console.error('ValidationError:', err.message);
           throw Boom.badRequest('Invalid request payload input');
         } else {
-          //Show error with dev only
+          // Show error with dev only
           console.error(err);
           throw err;
         }

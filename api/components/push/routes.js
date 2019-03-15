@@ -5,10 +5,12 @@
  * Post Routes
  * /push
  */
+const getPushNotication = require('./handlers/get').get;
+const pushPushNotication = require('./handlers/push').push;
+const { version } = require('../../package.json');
+
 exports.plugin = {
   async register(server) {
-    const getPushNotication = require('./handlers/get').get;
-    const pushPushNotication = require('./handlers/push').push;
     server.route([
       {
         method: 'GET',
@@ -22,6 +24,6 @@ exports.plugin = {
       },
     ]);
   },
-  version: require('../../package.json').version,
+  version,
   name: 'device-routes',
 };

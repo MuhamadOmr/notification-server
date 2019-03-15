@@ -1,15 +1,9 @@
-'use strict';
-
 // requires for testing
 const Code = require('code');
-const expect = Code.expect;
 const Lab = require('lab');
-const lab = (exports.lab = Lab.script());
 
-// use some BDD verbage instead of lab default
-const describe = lab.describe;
-const it = lab.it;
-const after = lab.after;
+const { expect } = Code;
+const { after, describe, it } = (exports.lab = Lab.script());
 
 // require hapi server
 const Server = require('../../server.js');

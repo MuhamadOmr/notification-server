@@ -3,15 +3,15 @@
  */
 
 const Mongoose = require('mongoose');
-const Glob = require('glob');
-require('../components/push/pushNotificationModel');
 Mongoose.Promise = require('bluebird');
+const { version } = require('../package.json');
+require('../components/push/pushNotificationModel');
 
 exports.plugin = {
   async register(server, options) {
     try {
       // When the connection is disconnected
-      Mongoose.connection.on('disconnected', function() {
+      Mongoose.connection.on('disconnected', () => {
         server.log(['mongoose', 'info'], 'Mongo Database disconnected');
       });
 
@@ -22,20 +22,17 @@ exports.plugin = {
           ['mongoose', 'info'],
           'Mongo Database disconnected through app termination',
         );
-        process.exit(0);
+        throw new Error('Mongo Database disconnected');
       });
 
       Mongoose.set('useCreateIndex', true);
       // connect to mongodb
-      const conn = await Mongoose.connect(
-        options.uri,
-        {
-          useNewUrlParser: true,
-          reconnectInterval: 1000,
-          reconnectTries: Number.MAX_VALUE,
-        },
-      );
-      console.log('versions:', require('../package.json').version);
+      const conn = await Mongoose.connect(options.uri, {
+        useNewUrlParser: true,
+        reconnectInterval: 1000,
+        reconnectTries: Number.MAX_VALUE,
+      });
+      console.log('versions:', version);
       server.decorate('server', 'mongoose', conn);
 
       //   // Load models
@@ -49,5 +46,5 @@ exports.plugin = {
     }
   },
   name: 'mongoose_connector',
-  version: require('../package.json').version,
+  version,
 };

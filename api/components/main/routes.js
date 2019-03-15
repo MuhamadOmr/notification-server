@@ -1,9 +1,11 @@
 /**
  * Project: notifiction-api
  */
+const Controller = require('./handlers/main');
+const { version } = require('../../package.json');
+
 exports.plugin = {
   async register(server) {
-    const Controller = require('./handlers/main');
     server.route([
       {
         method: 'GET',
@@ -12,6 +14,6 @@ exports.plugin = {
       },
     ]);
   },
-  version: require('../../package.json').version,
+  version,
   name: 'main-route',
 };

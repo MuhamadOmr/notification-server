@@ -9,7 +9,7 @@ const Handlers = {};
 // Lib contains our business specific logic
 const Lib = {};
 
-Handlers.home = async (req, res) => {
+Handlers.home = async () => {
   return {
     message: 'welcome to notification api',
   };

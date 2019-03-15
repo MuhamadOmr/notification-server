@@ -16,12 +16,12 @@ const schema = mongoose.Schema(
       type: Date,
       default: Date.now(),
     },
-    //['inproccess', 'sent', 'failed']
+    // ['inproccess', 'sent', 'failed']
     status: {
       type: String,
       default: 'inproccess',
     },
-    //['normal', 'personalized']
+    // ['normal', 'personalized']
     type: String,
     sentCount: {
       type: Number,

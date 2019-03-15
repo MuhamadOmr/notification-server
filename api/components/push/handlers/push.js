@@ -2,10 +2,11 @@
  * Project: notification-api
  */
 const mongoose = require('mongoose');
-const Push = mongoose.model('push');
 const Boom = require('boom');
 const validators = require('../validator');
 const jobsMS = require('../helpers/jobsMessageQueue');
+
+const Push = mongoose.model('push');
 
 // handlers are exported back for use in hapi routes
 const Handlers = {};
@@ -16,11 +17,12 @@ const Lib = {};
 /**
  * create jobs in a message queue with language and delayed time
  *
+ * @param {Object} jobsMSQ job message queue instance
  * @param {Object} pushNotification
  */
-Lib.createNotificationJobs = (jobsMS, pushNotification) => {
-  for (const messageObj of pushNotification.messages) {
-    jobsMS.add(
+Lib.createNotificationJobs = (jobsMSQ, pushNotification) => {
+  pushNotification.messages.forEach(messageObj => {
+    jobsMSQ.add(
       {
         message: messageObj.body,
         pushNotificationId: pushNotification._id,
@@ -34,7 +36,7 @@ Lib.createNotificationJobs = (jobsMS, pushNotification) => {
         delay: pushNotification.sendDate.getMilliseconds(),
       },
     );
-  }
+  });
   return true;
 };
 
@@ -64,7 +66,7 @@ Handlers.push = async (req, res) => {
     },
   );
 
-  const jobs = Lib.createNotificationJobs(jobsMS, pushNotification);
+  Lib.createNotificationJobs(jobsMS, pushNotification);
 
   return res.response({ pushNotification }).code(201);
 };
@@ -82,7 +84,7 @@ module.exports = {
           console.error('ValidationError:', err.message);
           throw Boom.badRequest('Invalid request payload input');
         } else {
-          //Show error with dev only
+          // Show error with dev only
           console.error(err);
           throw err;
         }

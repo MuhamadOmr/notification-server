@@ -2,10 +2,11 @@
  * Project: notification-api
  */
 const config = require('config');
-const Config = JSON.parse(JSON.stringify(config));
+const Vision = require('vision');
 const Inert = require('inert');
 const HapiSwagger = require('hapi-swagger');
-const Vision = require('vision');
+
+const Config = JSON.parse(JSON.stringify(config));
 const swaggerOptions = {
   host: 'localhost:3000',
   pathPrefixSize: 2,
