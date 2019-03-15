@@ -10,11 +10,13 @@ const JobsQueue = new Queue(
   Config.redis,
   {
     // attemps for retry the job if it fails
-    defaultJobOptions: { attempts: 10 },
-    // options how to handle the retries
-    backoff: {
-      type: 'exponential',
-      delay: TEN_SECONDS,
+    defaultJobOptions: {
+      attempts: 10,
+      // options how to handle the retries
+      backoff: {
+        type: 'exponential',
+        delay: TEN_SECONDS,
+      },
     },
   },
 );
