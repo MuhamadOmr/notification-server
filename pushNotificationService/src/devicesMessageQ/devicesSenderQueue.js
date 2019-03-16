@@ -1,4 +1,5 @@
 const Queue = require('bull');
+const devicesSenderProcessor = require('./devicesSenderProcessor');
 
 const TEN_SECONDS = 10000;
 
@@ -8,7 +9,7 @@ const DevicesSenderQueue = new Queue(
   {
     // attemps for retry the job if it fails
     defaultJobOptions: {
-      attempts: 10,
+      attempts: 3,
       // options how to handle the retries
       backoff: {
         type: 'exponential',
@@ -17,5 +18,8 @@ const DevicesSenderQueue = new Queue(
     },
   },
 );
+
+// add the process and run it in parallel using the cpu cores
+DevicesSenderQueue.process(100, devicesSenderProcessor);
 
 module.exports = DevicesSenderQueue;

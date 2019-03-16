@@ -1,9 +1,11 @@
-const mongoose = require('mongoose');
+// const mongoose = require('mongoose');
 
-const Customer = mongoose.model('customer');
+// const Customer = mongoose.model('Customer');
+const Customer = require('../models/customer');
 
 /**
- * build Mongodb Devices Query
+ * build Mongodb Devices Query .. 
+ * 
  *
  * @param {Object} condition condition object
  * @returns {Object} Devices Mongo Query
@@ -13,7 +15,7 @@ const buildDevicesDBQuery = condition => ({
     created_at: { $lt: condition.registeredlt },
   }),
   ...(condition.registeredgt && {
-    created_at: { $gt: condition.registeredlt },
+    created_at: { $gt: condition.registeredgt },
   }),
   ...(condition.lastRideDategt && {
     last_ride: { $gt: condition.lastRideDategt },
@@ -29,15 +31,15 @@ const buildDevicesDBQuery = condition => ({
   }),
   ...(condition.carriers &&
     condition.carriers.length > 0 && {
-      carrier: { $in: condition.carriers },
+      carrier: { $in: condition.carriers.map(c => new RegExp(`^${c}`, 'i')) },
     }),
   ...(condition.countries &&
     condition.countries.length > 0 && {
-      country: { $in: condition.countries },
+      country: { $in: condition.countries.map(c => new RegExp(`^${c}`, 'i')) },
     }),
   ...(condition.languages &&
     condition.languages.length > 0 && {
-      language: { $in: condition.languages },
+      language: { $in: condition.languages.map(l => new RegExp(`^${l}`, 'i')) },
     }),
   ...(condition.tags &&
     condition.tags.length > 0 && {
@@ -53,9 +55,7 @@ const buildDevicesDBQuery = condition => ({
  */
 module.exports.getListOfdevicesTokens = async condition => {
   const customerMongoQuery = buildDevicesDBQuery(condition);
-  const notificationCustomers = await Customer.find(customerMongoQuery)
-    .select({ deviceToken: 1 })
-    .exec();
+  const notificationCustomers = await Customer.find(customerMongoQuery).exec();
 
   return notificationCustomers.map(customer => customer.deviceToken);
 };

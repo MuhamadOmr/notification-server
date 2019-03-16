@@ -11,7 +11,7 @@ const { before, describe, it, after } = (exports.lab = Lab.script());
 // require hapi server
 
 async function setup() {
-  const Push = mongoose.model('push');
+  const Push = mongoose.model('Push');
 
   await Push.deleteMany({});
   await JobsQueue.empty();
@@ -42,6 +42,7 @@ describe('test pushing notifications ', async () => {
               body: 'some arabic notification',
             },
           ],
+          type: 'group',
           sendDate: '2019-03-11T05:05:34.628Z',
           filterCondition: {
             registeredlt: '2019-03-11T05:05:34.628Z',
@@ -62,6 +63,7 @@ describe('test pushing notifications ', async () => {
       setValue: {
         payload: {
           messages: [],
+          group: 'group',
           sendDate: '2019-03-11T05:05:34.628Z',
           filterCondition: {
             registeredlt: '2019-03-11T05:05:34.628Z',

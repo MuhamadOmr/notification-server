@@ -1,10 +1,9 @@
 const Queue = require('bull');
-const path = require('path');
-
-// this listen to the queue sent by the api 
+const groupPushProcessor = require('./groupPushProcessor');
+// this listen to the queue sent by the api
 
 // processor is chunking a huge list of devices into 1k device per FCM Request
-// it chunks are sent into a devicesSenderMessageQ 
+// it chunks are sent into a devicesSenderMessageQ
 
 const GroupPushQueue = new Queue(
   'group push notification message queue',
@@ -12,6 +11,6 @@ const GroupPushQueue = new Queue(
 );
 
 // add the process and run it in parallel using the cpu cores
-GroupPushQueue.process(5, path.resolve(__dirname, './groupPushProcessor.js'));
+GroupPushQueue.process(100, groupPushProcessor);
 
 module.exports = GroupPushQueue;

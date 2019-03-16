@@ -5,7 +5,7 @@ const mongoose = require('mongoose');
 const Boom = require('boom');
 const validators = require('../validator');
 
-const Push = mongoose.model('push');
+const Push = mongoose.model('Push');
 
 // handlers are exported back for use in hapi routes
 const Handlers = {};

@@ -1,26 +1,20 @@
 const mongoose = require('mongoose');
 
 // export this function and imported by server.js
-module.exports = (() => {
-  mongoose.connection.on('connected', () => {
-    console.log('Mongoose default connection is open to ');
-  });
 
-  mongoose.connection.on('error', err => {
-    throw new Error(`Mongoose default connection has occured ${err} error`);
-  });
+mongoose.connection.on('connected', () => {
+  console.log('Mongoose default connection is open');
+});
 
-  mongoose.connection.on('disconnected', () => {
-    throw new Error('Mongoose default connection is disconnected');
-  });
+mongoose.connection.on('error', err => {
+  console.log(`Mongoose default connection has occured ${err} error`);
+});
 
-  process.on('SIGINT', () => {
-    mongoose.connection.close(() => {
-      throw new Error(
-        'Mongoose default connection is disconnected due to application termination',
-      );
-    });
-  });
+mongoose.connection.on('disconnected', () => {
+  console.log('Mongoose default connection is disconnected');
+});
 
-  mongoose.connect(process.env.MONGODB_URL);
-})();
+
+module.exports = mongoose.createConnection(process.env.MONGODB_URL, {
+  useNewUrlParser: true,
+});

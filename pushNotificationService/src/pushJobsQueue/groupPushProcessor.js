@@ -1,5 +1,5 @@
 const DevicesSenderQueue = require('../devicesMessageQ/devicesSenderQueue');
-const { chunkifyDevicesForSender } = require('../helpers/DevicesChunker');
+const { chunkifyDevicesForSender } = require('../helpers/SenderRepo');
 const { getListOfdevicesTokens } = require('../helpers/CustomersRepo');
 
 /**
@@ -11,7 +11,8 @@ const { getListOfdevicesTokens } = require('../helpers/CustomersRepo');
  * @returns {Promise}
  */
 const groupPushProcessor = async job => {
-  const devicesTokensArray = getListOfdevicesTokens(job.condition);
+  const devicesTokensArray = await getListOfdevicesTokens(job.data.condition);
+
   const devicesChunks = chunkifyDevicesForSender(devicesTokensArray);
 
   devicesChunks.forEach(devicesList => {

@@ -35,4 +35,4 @@ const schema = mongoose.Schema(
   },
 );
 
-mongoose.model('push', schema);
+mongoose.model('Push', schema);

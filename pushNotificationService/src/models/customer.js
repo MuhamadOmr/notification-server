@@ -2,6 +2,7 @@
  * * Project: push-notification-service
  */
 const mongoose = require('mongoose');
+const mongooseCon = require('../lib/mongoose');
 
 const schema = mongoose.Schema(
   {
@@ -20,4 +21,4 @@ const schema = mongoose.Schema(
   },
 );
 
-mongoose.model('customer', schema);
+module.exports = mongooseCon.model('Customer', schema);

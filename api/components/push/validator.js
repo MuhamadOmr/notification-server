@@ -49,45 +49,49 @@ module.exports.postPushNotification = Joi.object().keys({
     .iso()
     .required()
     .label('Send Date'),
-  type: Joi.string().valid(PUSH_NOTIFICATION_TYPES),
-  filterCondition: Joi.object().keys({
-    registeredlt: Joi.date()
-      .iso()
-      .label('Registered date less than'),
-    registeredgt: Joi.date()
-      .iso()
-      .label('Registered date greater than'),
-    lastRideDategt: Joi.date()
-      .iso()
-      .label('last ride date greater than'),
-    lastRideDatelt: Joi.date()
-      .iso()
-      .label('last ride date less than'),
-    numberOfRidesgt: Joi.number().label('number of rides greater than'),
-    numberOfRideslt: Joi.number().label('number of rides less than'),
-    carriers: Joi.array()
-      .min(1)
-      .single()
-      .items(
-        Joi.string()
-          .required()
-          .label('Carrier'),
-      )
-      .label('Carriers Companies'),
-    countries: Joi.array()
-      .min(1)
-      .single()
-      .items(Joi.string().required())
-      .label('Countries'),
-    languages: Joi.array()
-      .min(1)
-      .single()
-      .items(Joi.string().required())
-      .label('Languages'),
-    tags: Joi.array()
-      .min(1)
-      .single()
-      .items(Joi.string().required())
-      .label('Tags'),
-  }),
+  type: Joi.string()
+    .valid(PUSH_NOTIFICATION_TYPES)
+    .required(),
+  filterCondition: Joi.object()
+    .keys({
+      registeredlt: Joi.date()
+        .iso()
+        .label('Registered date less than'),
+      registeredgt: Joi.date()
+        .iso()
+        .label('Registered date greater than'),
+      lastRideDategt: Joi.date()
+        .iso()
+        .label('last ride date greater than'),
+      lastRideDatelt: Joi.date()
+        .iso()
+        .label('last ride date less than'),
+      numberOfRidesgt: Joi.number().label('number of rides greater than'),
+      numberOfRideslt: Joi.number().label('number of rides less than'),
+      carriers: Joi.array()
+        .min(1)
+        .single()
+        .items(
+          Joi.string()
+            .required()
+            .label('Carrier'),
+        )
+        .label('Carriers Companies'),
+      countries: Joi.array()
+        .min(1)
+        .single()
+        .items(Joi.string().required())
+        .label('Countries'),
+      languages: Joi.array()
+        .min(1)
+        .single()
+        .items(Joi.string().required())
+        .label('Languages'),
+      tags: Joi.array()
+        .min(1)
+        .single()
+        .items(Joi.string().required())
+        .label('Tags'),
+    })
+    .required(),
 });
