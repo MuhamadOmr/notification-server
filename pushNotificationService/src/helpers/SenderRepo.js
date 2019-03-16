@@ -13,19 +13,27 @@ module.exports.chunkifyDevicesForSender = arr => {
 };
 
 /**
- * simple fcm notification sender
+ * send push notification to a group of devices
  *
- * @param {Object} senderClient fcm sender client injected
- * @param {Array} listOfDevicesTokens - list of devices tokens that we can send to up to 1K
+ * @param {Object} senderClient
+ * @param {String} message
+ * @param {Array} listOfDevicesTokens
  * @returns
  */
-module.exports.FCMSender = (senderClient, message, listOfDevicesTokens) => {
+module.exports.sendNotification = async (
+  senderClient,
+  message,
+  listOfDevicesTokens,
+) => {
+  const response = senderClient.sendMessage(message, listOfDevicesTokens);
   console.log(
     'sender...',
     'list of devices tokens ',
     listOfDevicesTokens,
     'message',
     message,
+    'responses here from fcm',
+    response,
   );
   return true;
 };

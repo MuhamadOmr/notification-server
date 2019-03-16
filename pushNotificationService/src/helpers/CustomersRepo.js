@@ -4,13 +4,13 @@
 const Customer = require('../models/customer');
 
 /**
- * build Mongodb Devices Query .. 
- * 
+ * build Mongodb Query for Customers ..
+ *
  *
  * @param {Object} condition condition object
  * @returns {Object} Devices Mongo Query
  */
-const buildDevicesDBQuery = condition => ({
+const buildCustomersDBQuery = condition => ({
   ...(condition.registeredlt && {
     created_at: { $lt: condition.registeredlt },
   }),
@@ -54,8 +54,10 @@ const buildDevicesDBQuery = condition => ({
  * @returns {Array} list of devices tokens
  */
 module.exports.getListOfdevicesTokens = async condition => {
-  const customerMongoQuery = buildDevicesDBQuery(condition);
-  const notificationCustomers = await Customer.find(customerMongoQuery).exec();
+  const customerMongoQuery = buildCustomersDBQuery(condition);
+  const notificationCustomers = await Customer.find(customerMongoQuery)
+    .select({ deviceToken: 1 })
+    .exec();
 
   return notificationCustomers.map(customer => customer.deviceToken);
 };
