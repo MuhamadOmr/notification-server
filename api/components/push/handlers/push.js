@@ -4,7 +4,8 @@
 const mongoose = require('mongoose');
 const Boom = require('boom');
 const validators = require('../validator');
-const jobsMS = require('../helpers/jobsMessageQueue');
+const GroupMQ = require('../helpers/groupNotificationMQ');
+const PersonalizedMQ = require('../helpers/PersonalizedNotificationMQ');
 
 const Push = mongoose.model('Push');
 
@@ -22,7 +23,7 @@ const Lib = {};
  */
 Lib.createNotificationJobs = (jobsMSQ, pushNotification) => {
   pushNotification.messages.forEach(messageObj => {
-    jobsMSQ.add(
+    jobsMSQ[pushNotification.type].add(
       {
         message: messageObj.body,
         pushNotificationId: pushNotification._id,
@@ -30,7 +31,6 @@ Lib.createNotificationJobs = (jobsMSQ, pushNotification) => {
           ...pushNotification.filterCondition,
           language: messageObj.language,
         },
-        type: pushNotification.type,
       },
       {
         delay: pushNotification.sendDate.getMilliseconds(),
@@ -60,13 +60,16 @@ Lib.createPushNotification = async pushNotification => {
  */
 Handlers.push = async (req, res) => {
   const sentPN = req.payload;
+  const PushNotificationQueue = {
+    group: GroupMQ,
+    personalized: PersonalizedMQ,
+  };
   const pushNotification = await Lib.createPushNotification(sentPN).catch(
     () => {
       throw Boom.badRequest('push notification failed to create!');
     },
   );
-
-  Lib.createNotificationJobs(jobsMS, pushNotification);
+  Lib.createNotificationJobs(PushNotificationQueue, pushNotification);
 
   return res.response({ pushNotification }).code(201);
 };

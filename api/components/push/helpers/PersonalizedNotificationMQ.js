@@ -5,8 +5,8 @@ const Config = JSON.parse(JSON.stringify(config));
 
 const TEN_SECONDS = 10000;
 
-const JobsQueue = new Queue(
-  'group push notification message queue',
+const PersonalizedMQ = new Queue(
+  'personalized push notification message queue',
   Config.redis,
   {
     // attemps for retry the job if it fails
@@ -21,4 +21,4 @@ const JobsQueue = new Queue(
   },
 );
 
-module.exports = JobsQueue;
+module.exports = PersonalizedMQ;

@@ -2,7 +2,7 @@
 const Code = require('code');
 const Lab = require('lab');
 const mongoose = require('mongoose');
-const JobsQueue = require('../../components/push/helpers/jobsMessageQueue');
+const JobsQueue = require('../../components/push/helpers/groupNotificationMQ');
 const Server = require('../../server');
 
 const { expect } = Code;
