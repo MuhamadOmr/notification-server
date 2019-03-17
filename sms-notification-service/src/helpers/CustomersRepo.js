@@ -49,7 +49,7 @@ const buildCustomersDBQuery = condition => ({
  * @param {Object} condition
  * @returns {Array} Phone numbers
  */
-module.exports.buildCustomersSenderJobs = async condition => {
+module.exports.getCustomersPhoneNumbers = async condition => {
   const customerMongoQuery = buildCustomersDBQuery(condition);
   const smsNotificationCustomers = await Customer.find(customerMongoQuery)
     .select({ phone: 1 })

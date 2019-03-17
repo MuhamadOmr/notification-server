@@ -1,5 +1,5 @@
 const SMSSenderQueue = require('../smsSenderMessageQ/smsSenderQueue');
-const { buildCustomersSenderJobs } = require('../helpers/CustomersRepo');
+const { getCustomersPhoneNumbers } = require('../helpers/CustomersRepo');
 
 /**
  * sms notification process each job in the queue coming from api
@@ -8,7 +8,7 @@ const { buildCustomersSenderJobs } = require('../helpers/CustomersRepo');
  * @returns {Promise}
  */
 const smsNotificationProcessor = async job => {
-  const customersPhoneNumbers = await buildCustomersSenderJobs(
+  const customersPhoneNumbers = await getCustomersPhoneNumbers(
     job.data.condition,
   );
 
