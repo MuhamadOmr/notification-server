@@ -19,7 +19,7 @@
 	"deviceToken":"c8LVSED6z2s:APA91bFWAwM3xEQbiu1iQ_TGyFyumFx9h7jZJ35nwBkCga1X_xd7REZinIAjdEWVKIlrJHutdpwv6s8iHgyPFQvFXQYFlMZDanpStLRonH9lhGv0DioCHP1WZR3oYwC7IyCSHIklOnK-",
     "language": "english",
     "numberOfRides": 20,
-    "carrier": "orange",
+    "carrier": "vodafone",
     "created_at": { "$date": "2019-04-20T14:56:59.301Z" },
     "last_ride": { "$date": "2019-04-22T14:56:59.301Z" }
   },

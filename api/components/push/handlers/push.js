@@ -28,7 +28,7 @@ Lib.createNotificationJobs = (jobsMSQ, pushNotification) => {
         pushNotificationId: pushNotification._id,
         condition: {
           ...pushNotification.filterCondition,
-          lang: messageObj.language,
+          language: messageObj.language,
         },
         type: pushNotification.type,
       },

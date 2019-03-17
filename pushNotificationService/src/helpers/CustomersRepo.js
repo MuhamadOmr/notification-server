@@ -37,10 +37,9 @@ const buildCustomersDBQuery = condition => ({
     condition.countries.length > 0 && {
       country: { $in: condition.countries.map(c => new RegExp(`^${c}`, 'i')) },
     }),
-  ...(condition.languages &&
-    condition.language.length > 0 && {
-      language: { $in: condition.languages.map(l => new RegExp(`^${l}`, 'i')) },
-    }),
+  ...(condition.language && {
+    language: { $regex: `^${condition.language}`, $options: 'i' },
+  }),
   ...(condition.tags &&
     condition.tags.length > 0 && {
       tags: { $in: condition.tags },
