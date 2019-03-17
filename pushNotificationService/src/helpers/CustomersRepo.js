@@ -70,7 +70,7 @@ module.exports.getListOfdevicesTokens = async condition => {
  */
 const customizeMessageByCustomer = (message, user) => {
   const messageCustom = new MessageCustomizer(message);
-  return messageCustom.replaceName(user.name).replaceCountry(user.country);
+  return messageCustom.replaceName(user.name).replaceCountry(user.country).toString();
 };
 
 /**

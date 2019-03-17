@@ -1,5 +1,5 @@
 const Queue = require('bull');
-const personlizedPushProcessor = require('./groupPushProcessor');
+const personlizedPushProcessor = require('./personlizedPushProcessor');
 const { PERSONALIZED_PUSH_NOTIFICATION_QUEUE_NAME } = require('../lib/constants');
 
 // this listen to the queue sent by the api

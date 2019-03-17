@@ -1,4 +1,4 @@
-// const DevicesSenderQueue = require('../devicesMessageQ/devicesSenderQueue');
+const DevicesSenderQueue = require('../devicesMessageQ/devicesSenderQueue');
 const { buildCustomersSenderJobs } = require('../helpers/CustomersRepo');
 
 /**
@@ -10,22 +10,17 @@ const { buildCustomersSenderJobs } = require('../helpers/CustomersRepo');
  * @returns {Promise}
  */
 const personalizedPushProcessor = async job => {
-  //   const devicesTokensArray = await buildCustomersSenderJobs(
-  //     job.data.message,
-  //     job.data.condition,
-  //   );
   const devicesTokensArray = await buildCustomersSenderJobs(
     job.data.message,
     job.data.condition,
   );
 
-console.log('personalized push notification ', devicesTokensArray)
-//   devicesTokensArray.forEach(customerJob => {
-//     DevicesSenderQueue.add({
-//       devicesList: customerJob.devicesTokens,
-//       message: customerJob.message,
-//     });
-//   });
+  devicesTokensArray.forEach(customerJob => {
+    DevicesSenderQueue.add({
+      devicesList: customerJob.devicesTokens,
+      message: customerJob.message,
+    });
+  });
 
   return Promise.resolve('done');
 };
