@@ -1,15 +1,18 @@
-// const DevicesSenderQueue = require('../devicesMessageQ/devicesSenderQueue');
 const { sendNotification } = require('../helpers/SenderRepo');
 const FCMSenderClient = require('../lib/FCMSenderClient');
 
+/**
+ * devices sender processor, injecting fcmSender client for sending notificaitons
+ *
+ * @param {Object} job
+ * @returns {Promise}
+ */
 const devicesSenderProcessor = async job => {
-  const response = await sendNotification(
+  return sendNotification(
     FCMSenderClient,
     job.data.message,
     job.data.devicesList,
   );
-  console.log(response);
-  return Promise.resolve('done');
 };
 
 module.exports = devicesSenderProcessor;

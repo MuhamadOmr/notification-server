@@ -1,10 +1,11 @@
 const Queue = require('bull');
 const devicesSenderProcessor = require('./devicesSenderProcessor');
+const { DEVICES_PUSH_NOTIFICATION_QUEUE_NAME } = require('../lib/constants');
 
 const TEN_SECONDS = 10000;
 
 const DevicesSenderQueue = new Queue(
-  'devices push notification queue',
+  DEVICES_PUSH_NOTIFICATION_QUEUE_NAME,
   process.env.REDIS_URL,
   {
     // attemps for retry the job if it fails
@@ -19,7 +20,7 @@ const DevicesSenderQueue = new Queue(
   },
 );
 
-// add the process and run it in parallel using the cpu cores
+// add the process and run it with conccurent allowed number
 DevicesSenderQueue.process(100, devicesSenderProcessor);
 
 module.exports = DevicesSenderQueue;

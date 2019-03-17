@@ -13,27 +13,17 @@ module.exports.chunkifyDevicesForSender = arr => {
 };
 
 /**
- * send push notification to a group of devices
+ * send push notification to a list of devices
  *
  * @param {Object} senderClient
  * @param {String} message
  * @param {Array} listOfDevicesTokens
- * @returns
+ * @returns {Promise} resolved or rejected promise from gcm sender
  */
-module.exports.sendNotification = async (
+module.exports.sendNotification = (
   senderClient,
   message,
   listOfDevicesTokens,
 ) => {
-  const response = senderClient.sendMessage(message, listOfDevicesTokens);
-  console.log(
-    'sender...',
-    'list of devices tokens ',
-    listOfDevicesTokens,
-    'message',
-    message,
-    'responses here from fcm',
-    response,
-  );
-  return true;
+  return senderClient.sendMessage(message, listOfDevicesTokens);
 };
