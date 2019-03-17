@@ -10,12 +10,12 @@ const { buildCustomersSenderJobs } = require('../helpers/CustomersRepo');
  * @returns {Promise}
  */
 const personalizedPushProcessor = async job => {
-  const devicesTokensArray = await buildCustomersSenderJobs(
+  const senderJobsArray = await buildCustomersSenderJobs(
     job.data.message,
     job.data.condition,
   );
 
-  devicesTokensArray.forEach(customerJob => {
+  senderJobsArray.forEach(customerJob => {
     DevicesSenderQueue.add({
       devicesList: customerJob.devicesTokens,
       message: customerJob.message,
