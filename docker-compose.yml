@@ -36,5 +36,14 @@ services:
         depends_on:
             - "mongodb"
         command: sh -c './wait-for mongodb:27017 && npm run start'
+    sms-notification-service:
+        build:
+            context: ./sms-notification-service
+            dockerfile: Dockerfile
+        env_file:
+            - ./sms-notification-service/.compose.env
+        depends_on:
+            - "mongodb"
+        command: sh -c './wait-for mongodb:27017 && npm run start'
 volumes:
     mongo-data:

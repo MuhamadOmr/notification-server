@@ -1,6 +1,6 @@
 FROM node:alpine
 
-WORKDIR /push-notification-service
+WORKDIR /sms-notification-service
 
 COPY wait-for /wait-for
 
