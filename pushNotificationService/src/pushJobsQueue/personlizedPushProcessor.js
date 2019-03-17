@@ -1,11 +1,33 @@
-// const Queue = require('bull');
+// const DevicesSenderQueue = require('../devicesMessageQ/devicesSenderQueue');
+const { buildCustomersSenderJobs } = require('../helpers/CustomersRepo');
 
-// const GroupPushQueue = new Queue(
-//   'group push notification message queue',
-//   process.env.REDIS_URL,
-// );
+/**
+ * personalized push notification process each job in the queue coming from api
+ *
+ * chunking the huge list of devices into 1k device per request
+ *
+ * @param {Object} job - personalized push notification job
+ * @returns {Promise}
+ */
+const personalizedPushProcessor = async job => {
+  //   const devicesTokensArray = await buildCustomersSenderJobs(
+  //     job.data.message,
+  //     job.data.condition,
+  //   );
+  const devicesTokensArray = await buildCustomersSenderJobs(
+    job.data.message,
+    job.data.condition,
+  );
 
-// // You can use concurrency as well:
-// queue.process(5, '/path/to/my/processor.js');
+console.log('personalized push notification ', devicesTokensArray)
+//   devicesTokensArray.forEach(customerJob => {
+//     DevicesSenderQueue.add({
+//       devicesList: customerJob.devicesTokens,
+//       message: customerJob.message,
+//     });
+//   });
 
-// module.exports = GroupPushQueue;
+  return Promise.resolve('done');
+};
+
+module.exports = personalizedPushProcessor;

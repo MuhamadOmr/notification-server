@@ -1,11 +1,18 @@
-// const Queue = require('bull');
+const Queue = require('bull');
+const personlizedPushProcessor = require('./groupPushProcessor');
+const { PERSONALIZED_PUSH_NOTIFICATION_QUEUE_NAME } = require('../lib/constants');
 
-// const GroupPushQueue = new Queue(
-//   'group push notification message queue',
-//   process.env.REDIS_URL,
-// );
+// this listen to the queue sent by the api
 
-// // add the process and run it in parallel using the cpu cores 
-// GroupPushQueue.process(5, './groupPushProcessor.js');
+// processor is chunking a huge list of devices into 1k device per FCM Request
+// it chunks are sent into a devicesSenderMessageQ
 
-// module.exports = GroupPushQueue;
+const PersonalizedPushQueue = new Queue(
+  PERSONALIZED_PUSH_NOTIFICATION_QUEUE_NAME,
+  process.env.REDIS_URL,
+);
+
+// add the process and run it with conccurent allowed number
+PersonalizedPushQueue.process(100, personlizedPushProcessor);
+
+module.exports = PersonalizedPushQueue;

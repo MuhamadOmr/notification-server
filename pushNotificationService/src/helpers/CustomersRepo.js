@@ -1,4 +1,4 @@
-// const mongoose = require('mongoose');
+const MessageCustomizer = require('./MessageCustomizer');
 
 // const Customer = mongoose.model('Customer');
 const Customer = require('../models/customer');
@@ -38,7 +38,7 @@ const buildCustomersDBQuery = condition => ({
       country: { $in: condition.countries.map(c => new RegExp(`^${c}`, 'i')) },
     }),
   ...(condition.languages &&
-    condition.languages.length > 0 && {
+    condition.language.length > 0 && {
       language: { $in: condition.languages.map(l => new RegExp(`^${l}`, 'i')) },
     }),
   ...(condition.tags &&
@@ -60,4 +60,33 @@ module.exports.getListOfdevicesTokens = async condition => {
     .exec();
 
   return notificationCustomers.map(customer => customer.deviceToken);
+};
+
+/**
+ * cutomize the notification message based on user fields
+ *
+ * @param {String} message
+ * @param {Object} user
+ * @returns {String}
+ */
+const customizeMessageByCustomer = (message, user) => {
+  const messageCustom = new MessageCustomizer(message);
+  return messageCustom.replaceName(user.name).replaceCountry(user.country);
+};
+
+/**
+ * Build Customer Sender Jobs
+ *
+ * @param {String} message
+ * @param {Object} condition
+ * @returns {Object[{devicesTokens: Array, message: String}]} array of object
+ */
+module.exports.buildCustomersSenderJobs = async (message, condition) => {
+  const customerMongoQuery = buildCustomersDBQuery(condition);
+  const notificationCustomers = await Customer.find(customerMongoQuery).exec();
+
+  return notificationCustomers.map(customer => ({
+    devicesTokens: [customer.deviceToken],
+    message: customizeMessageByCustomer(message, customer),
+  }));
 };
