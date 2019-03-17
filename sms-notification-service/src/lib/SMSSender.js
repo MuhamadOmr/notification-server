@@ -17,6 +17,9 @@ class SMSSender {
    * @memberof SMSSender
    */
   sendMessage(message, phoneNumber) {
+    console.log(
+      `using the api ${this.apiKey} sending ${message} to :${phoneNumber}`,
+    );
     return Promise.resolve(
       `using the api ${this.apiKey} sending ${message} to :${phoneNumber}`,
     );

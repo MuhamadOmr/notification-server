@@ -6,6 +6,7 @@ const Boom = require('boom');
 const validators = require('../validator');
 const GroupMQ = require('../helpers/groupNotificationMQ');
 const PersonalizedMQ = require('../helpers/PersonalizedNotificationMQ');
+const SMSMQ = require('../helpers/smsNotificationMQ');
 
 const Push = mongoose.model('Push');
 
@@ -63,6 +64,7 @@ Handlers.push = async (req, res) => {
   const PushNotificationQueue = {
     group: GroupMQ,
     personalized: PersonalizedMQ,
+    sms: SMSMQ,
   };
   const pushNotification = await Lib.createPushNotification(sentPN).catch(
     () => {

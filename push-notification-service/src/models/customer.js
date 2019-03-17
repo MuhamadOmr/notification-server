@@ -9,6 +9,7 @@ const schema = mongoose.Schema(
     name: String,
     email: String,
     country: String,
+    phone: Number,
     deviceToken: String,
     language: String,
     numberOfRides: Number,

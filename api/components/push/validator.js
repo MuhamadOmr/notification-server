@@ -5,7 +5,7 @@ const Joi = require('joi');
 Joi.objectId = require('joi-objectid')(Joi);
 
 const PUSH_NOTIFICATION_STATUSES = ['inproccess', 'sent', 'failed'];
-const PUSH_NOTIFICATION_TYPES = ['group', 'personalized'];
+const PUSH_NOTIFICATION_TYPES = ['group', 'personalized', 'sms'];
 
 const notificationMessage = Joi.object().keys({
   language: Joi.string().required(),

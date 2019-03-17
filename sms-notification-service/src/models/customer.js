@@ -1,5 +1,5 @@
 /**
- * * Project: push-notification-service
+ * * Project: sms-notification-service
  */
 const mongoose = require('mongoose');
 const mongooseCon = require('../lib/mongoose');
@@ -8,6 +8,7 @@ const schema = mongoose.Schema(
   {
     name: String,
     email: String,
+    phone: Number,
     country: String,
     deviceToken: String,
     language: String,
