@@ -27,5 +27,14 @@ services:
         depends_on:
             - "mongodb"
         command: sh -c './wait-for mongodb:27017 && npm run compose'
+    push-notification-service:
+        build:
+            context: ./push-notification-service
+            dockerfile: Dockerfile
+        env_file:
+            - ./push-notification-service/.compose.env
+        depends_on:
+            - "mongodb"
+        command: sh -c './wait-for mongodb:27017 && npm run start'
 volumes:
     mongo-data:

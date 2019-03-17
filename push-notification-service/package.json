@@ -4,7 +4,7 @@
   "description": "",
   "main": "main.js",
   "scripts": {
-    "start": "node main.js",
+	"start": "node main.js",
     "test": "node_modules/.bin/mocha -c --recursive ./test/**.js",
     "lint": "eslint '**/*.js'",
     "lint:fix": "eslint --fix '**/*.js'",
