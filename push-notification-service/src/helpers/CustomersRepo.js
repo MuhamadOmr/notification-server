@@ -74,7 +74,7 @@ const customizeMessageByCustomer = (message, user) => {
 };
 
 /**
- * Build Customer Sender Jobs
+ * Build Customer Sender Jobs for personalized notification 
  *
  * @param {String} message
  * @param {Object} condition

@@ -4,8 +4,8 @@
   "description": "",
   "main": "main.js",
   "scripts": {
-	"start": "node main.js",
-    "test": "node_modules/.bin/mocha -c --recursive ./test/**.js",
+    "start": "node main.js",
+    "test": "node_modules/.bin/mocha -c --exit --recursive ./test/**/*.js",
     "lint": "eslint '**/*.js'",
     "lint:fix": "eslint --fix '**/*.js'",
     "precommit": "lint-staged"
