@@ -4,9 +4,9 @@ const { buildCustomersSenderJobs } = require('../../src/helpers/CustomersRepo');
 const Customer = require('../../src/models/customer');
 
 chai.should();
-describe('Get List Of Devices Tokens Test', () => {
+describe('get list of sender jobs personalized notification', () => {
   before(async () => {
-    await Customer.remove({});
+    await Customer.deleteMany({});
     await Customer.insertMany([
       {
         name: 'Muhammad',
@@ -27,7 +27,7 @@ describe('Get List Of Devices Tokens Test', () => {
   [
     {
       caseName:
-        'should return list of 2 objects each contain devices tokens of of 1 length and a message when condition have country egypt',
+        'should return list of 2 objects that have devices tokens and a message when condition have country egypt',
       condition: {
         carriers: ['vodafone'],
         countries: ['egypt'],

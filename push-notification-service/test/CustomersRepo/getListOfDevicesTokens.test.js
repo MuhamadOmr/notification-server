@@ -1,12 +1,12 @@
 const chai = require('chai');
-require('dotenv').config();
+require('dotenv').config( );
 const { getListOfdevicesTokens } = require('../../src/helpers/CustomersRepo');
 const Customer = require('../../src/models/customer');
 
 chai.should();
 describe('Get List Of Devices Tokens Test', () => {
   before(async () => {
-    await Customer.remove({});
+    await Customer.deleteMany({});
     await Customer.insertMany([
       {
         name: 'Muhammad',
