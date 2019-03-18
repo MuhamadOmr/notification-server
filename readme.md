@@ -17,3 +17,14 @@ docker-compose up --build
 ```url
 localhost:3000/documentation
 ```
+
+# testing for each service 
+include a .env file in push-notification-service folder
+
+```json
+
+MONGODB_URL=mongodb://localhost:27017/swvltesting
+
+REDIS_URL=redis://localhost:6379
+
+```
