@@ -1,0 +1,49 @@
+version: "3"
+services:
+    redis:
+        image: redis
+        container_name: redis
+        expose:
+            - 6379
+    mongodb:
+        image: mongo:4.0.5
+        # start a mongodb server and dropping the customers collection because it gets seeded everytime we compose up
+        command: mongod --port 27017
+        restart: always
+        expose:
+            - 27017
+        volumes:
+            - mongo-data:/data/db
+    mongo-seed:
+        build:
+            context: ./mongo-seed
+            dockerfile: Dockerfile
+    api:
+        build:
+            context: ./api
+            dockerfile: Dockerfile
+        ports:
+            - "3000:3000"
+        depends_on:
+            - "mongodb"
+        command: sh -c './wait-for mongodb:27017 && npm run test'
+    push-notification-service:
+        build:
+            context: ./push-notification-service
+            dockerfile: Dockerfile
+        env_file:
+            - ./push-notification-service/.compose.env
+        depends_on:
+            - "mongodb"
+        command: sh -c './wait-for mongodb:27017 && npm run test'
+    sms-notification-service:
+        build:
+            context: ./sms-notification-service
+            dockerfile: Dockerfile
+        env_file:
+            - ./sms-notification-service/.compose.env
+        depends_on:
+            - "mongodb"
+        command: sh -c './wait-for mongodb:27017 && npm run test'
+volumes:
+    mongo-data:

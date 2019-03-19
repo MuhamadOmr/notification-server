@@ -1,5 +1,5 @@
 /**
- * Project: pushbots-api-v3
+ * Project: notification-api
  */
 
 const Mongoose = require('mongoose');
