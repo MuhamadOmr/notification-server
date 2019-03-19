@@ -1,5 +1,6 @@
 const chai = require('chai');
-require('dotenv').config();
+const path = require('path');
+require('dotenv').config({path: path.resolve(`./.${process.env.NODE_ENV}.env`)});
 const { buildCustomersSenderJobs } = require('../../src/helpers/CustomersRepo');
 const Customer = require('../../src/models/customer');
 

@@ -7,6 +7,7 @@ const Inert = require('inert');
 const HapiSwagger = require('hapi-swagger');
 
 const Config = JSON.parse(JSON.stringify(config));
+
 const swaggerOptions = {
   host: 'localhost:3000',
   pathPrefixSize: 2,

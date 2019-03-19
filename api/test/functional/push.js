@@ -10,6 +10,9 @@ const { before, describe, it, after } = (exports.lab = Lab.script());
 
 // require hapi server
 
+const sleep = milliseconds =>
+  new Promise(resolve => setTimeout(resolve, milliseconds));
+
 async function setup() {
   const Push = mongoose.model('Push');
 
@@ -76,7 +79,6 @@ describe('test pushing notifications ', async () => {
       },
       expected: {
         statusCode: 400,
-        queueCount: 2,
       },
     },
   ].forEach(ctx => {
@@ -87,6 +89,7 @@ describe('test pushing notifications ', async () => {
         url: `/push`,
         payload: ctx.setValue.payload,
       });
+      await sleep(1000);
       const jobsCount = await JobsQueue.count();
 
       expect(response.statusCode).to.equal(ctx.expected.statusCode);

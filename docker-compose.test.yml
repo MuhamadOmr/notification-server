@@ -26,7 +26,8 @@ services:
             - "3000:3000"
         depends_on:
             - "mongodb"
-        command: sh -c './wait-for mongodb:27017 && npm run compose-test'
+            - "redis"
+        command: sh -c './wait-for mongodb:27017 && npm run test:compose'
     push-notification-service:
         build:
             context: ./push-notification-service
@@ -35,6 +36,7 @@ services:
             - ./push-notification-service/.compose.env
         depends_on:
             - "mongodb"
-        command: sh -c './wait-for mongodb:27017 && npm run test'
+            - "redis"
+        command: sh -c './wait-for mongodb:27017 && npm run test:compose'
 volumes:
     mongo-data:
