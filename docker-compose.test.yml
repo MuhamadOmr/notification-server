@@ -26,22 +26,13 @@ services:
             - "3000:3000"
         depends_on:
             - "mongodb"
-        command: sh -c './wait-for mongodb:27017 && npm run test'
+        command: sh -c './wait-for mongodb:27017 && npm run compose-test'
     push-notification-service:
         build:
             context: ./push-notification-service
             dockerfile: Dockerfile
         env_file:
             - ./push-notification-service/.compose.env
-        depends_on:
-            - "mongodb"
-        command: sh -c './wait-for mongodb:27017 && npm run test'
-    sms-notification-service:
-        build:
-            context: ./sms-notification-service
-            dockerfile: Dockerfile
-        env_file:
-            - ./sms-notification-service/.compose.env
         depends_on:
             - "mongodb"
         command: sh -c './wait-for mongodb:27017 && npm run test'
